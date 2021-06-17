@@ -1,0 +1,30 @@
+info:
+  build:
+    name: todo_list_batch
+    version: 1.0.0
+
+server:
+  port: 8081
+
+spring:
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: never
+  datasource:
+    url: yourUrl
+    driver-class-name: org.postgresql.Driver
+    username: yourUsername
+    password: yourPassword
+
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: false
+      hibernate:
+        ddl-auto: none
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      properties:
+        hibernate:
+          default_schema: todo_list_batch
