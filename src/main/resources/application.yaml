@@ -18,13 +18,18 @@ spring:
     username: yourUsername
     password: yourPassword
 
-    jpa:
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
-      show-sql: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
       hibernate:
-        ddl-auto: none
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      properties:
-        hibernate:
-          default_schema: todo_list_batch
+        default_schema: todo_list_batch
+
+  mail:
+    host: yourHost
+    emailFrom: your@email
+    password: yourPassword

@@ -11,8 +11,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Collections;
+import za.co.learnings.todolistbatch.service.TodoApiService;
 
 @Configuration
 @EnableBatchProcessing
@@ -20,6 +19,7 @@ import java.util.Collections;
 public class OverdueTasksStepOneConfiguration {
 
     private final StepBuilderFactory stepBuilderFactory;
+    private final TodoApiService todoApiService;
 
     @Bean
     @StepScope
@@ -27,14 +27,18 @@ public class OverdueTasksStepOneConfiguration {
         return new OverdueTasksStepOneListener();
     };
 
-    public OverdueTasksStepOneConfiguration(StepBuilderFactory stepBuilderFactory) {
+    public OverdueTasksStepOneConfiguration(StepBuilderFactory stepBuilderFactory,
+                                            TodoApiService todoApiService) {
         this.stepBuilderFactory = stepBuilderFactory;
+        this.todoApiService = todoApiService;
     }
 
     @Bean
     @StepScope
     public ItemReader<Task> taskItemReader() {
-        return new ListItemReader<>(Collections.emptyList());
+        var result = todoApiService.getOverDueTasks();
+        log.info("Total number of tasks read: " + result.size());
+        return new ListItemReader<>(result);
     }
 
     @Bean
